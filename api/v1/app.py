@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Entry point of the api"""
 from flask import Flask, abort
-fron flask_cors import CORS
+from flask_cors import CORS
 import os
 
 from models import storage
