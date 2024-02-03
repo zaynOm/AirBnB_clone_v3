@@ -44,13 +44,13 @@ def create_place(city_id):
     """create a new place"""
     if not storage.get(City, city_id):
         abort(404)
-    if not storage.get(User, data.get('user_id')):
-        abort(404)
     if not request.is_json:
         abort(400, 'Not a JSON')
     data = request.get_json()
     if not data.get('name'):
         abort(400, 'Missing name')
+    if not storage.get(User, data.get('user_id')):
+        abort(404)
     if not data.get('user_id'):
         abort(400, 'Missing user_id')
     new_place = Place(city_id=city_id, **data)
@@ -58,7 +58,7 @@ def create_place(city_id):
     return new_place.to_dict(), 201
 
 
-@app_views.route('places/<id>', methods=['PUT'])
+@app_views.route('/places/<id>', methods=['PUT'])
 def update_place(id):
     """update a place by its id"""
     place = storage.get(Place, id)
@@ -70,5 +70,5 @@ def update_place(id):
     for k, v in data.items():
         if k not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
             setattr(place, k, v)
-    storage.save()
+    place.save()
     return place.to_dict()
