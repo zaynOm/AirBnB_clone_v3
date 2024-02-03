@@ -49,10 +49,10 @@ def create_place(city_id):
     data = request.get_json()
     if not data.get('name'):
         abort(400, 'Missing name')
-    if not storage.get(User, data.get('user_id')):
-        abort(404)
     if not data.get('user_id'):
         abort(400, 'Missing user_id')
+    if not storage.get(User, data.get('user_id')):
+        abort(404)
     new_place = Place(city_id=city_id, **data)
     new_place.save()
     return new_place.to_dict(), 201
