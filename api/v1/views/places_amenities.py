@@ -9,7 +9,7 @@ from models.amenity import Amenity
 
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'])
-def places_of_place(place_id):
+def amenites_of_place(place_id):
     """display all amenities of a place"""
     place = storage.get(Place, place_id)
     if place:
@@ -34,7 +34,7 @@ def delete_amenity_from_place(place_id, amenity_id):
 
 
 @app_views.route('/places/<place_id>/amenites/<amenity_id>', methods=['POST'])
-def create_place(place_id, amenity_id):
+def link_amenity_place(place_id, amenity_id):
     """create a new amenity"""
     place = storage.get(Place, place_id)
     amenity = storage.get(Amenity, amenity_id)
