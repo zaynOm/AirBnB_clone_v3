@@ -138,8 +138,3 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(storage.count(), len(all_objs))
         self.assertEqual(storage.count(User), 2)
         self.assertEqual(storage.count(State), 1)
-
-
-
-
-
