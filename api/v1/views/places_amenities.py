@@ -3,7 +3,7 @@
 from flask import abort, jsonify
 
 from api.v1.views import app_views
-from models import storage
+from models import storage, storage_t
 from models.place import Place
 from models.amenity import Amenity
 
@@ -28,7 +28,11 @@ def delete_amenity_from_place(place_id, amenity_id):
         abort(404)
     if amenity not in place.amenites:
         abort(404)
-    storage.delete(amenity)
+    if storage_t == 'db':
+        place.amenites.remove(amenity)
+    else:
+        place.amenity_ids.remove(amenity.id)
+
     storage.save()
     return {}
 
