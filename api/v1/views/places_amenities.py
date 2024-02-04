@@ -18,7 +18,8 @@ def places_of_place(place_id):
     abort(404)
 
 
-@app_views.route('/places/<place_id>/amenites/<amenity_id>', methods=['DELETE'])
+@app_views.route('/places/<place_id>/amenites/<amenity_id>',
+                 methods=['DELETE'])
 def delete_place(place_id, amenity_id):
     """delete a amenity linked to a place by its id"""
     place = storage.get(Place, place_id)
@@ -41,6 +42,6 @@ def create_place(place_id, amenity_id):
         abort(404)
     if amenity in place.amenities:
         return amenity.to_dict(), 200
-    
+
     place.amenities.append(amenity)
     return amenity.to_dict(), 201
