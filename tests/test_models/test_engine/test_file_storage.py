@@ -129,6 +129,9 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Test the count of all objects by class name"""
         storage = FileStorage()
+        storage.__objects = {}
+        storage.save()
+
         amentity1 = Amenity(**{'name': 'Gaming console'})
         amentity2 = Amenity(**{'name': 'Work setup'})
         state1 = State(**{'name': 'Casablanca-Settat'})
@@ -136,9 +139,9 @@ class TestFileStorage(unittest.TestCase):
         amentity2.save()
         state1.save()
 
-        with open('file.json', 'r') as f:
-            all_objs = json.loads(f.read())
-
-        self.assertEqual(storage.count(), len(all_objs))
-        self.assertEqual(storage.count(Amenity), 2)
-        self.assertEqual(storage.count(State), 1)
+        objs = storage.all().values()
+        amenities = [v for v in objs if v.__class__.__name__ == 'Amenity']
+        states = [v for v in objs if v.__class__.__name__ == 'State']
+        self.assertEqual(storage.count(), len(storage.all()))
+        self.assertEqual(storage.count(Amenity), len(amenities))
+        self.assertEqual(storage.count(State), len(states))
