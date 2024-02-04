@@ -9,7 +9,7 @@ from models.amenity import Amenity
 
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'])
-def amenites_of_place(place_id):
+def amenities_of_place(place_id):
     """display all amenities of a place"""
     place = storage.get(Place, place_id)
     if place:
@@ -18,7 +18,7 @@ def amenites_of_place(place_id):
     abort(404)
 
 
-@app_views.route('/places/<place_id>/amenites/<amenity_id>',
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  methods=['DELETE'])
 def delete_amenity_from_place(place_id, amenity_id):
     """Remove an amenity from a place"""
@@ -26,10 +26,10 @@ def delete_amenity_from_place(place_id, amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if not place or not amenity:
         abort(404)
-    if amenity not in place.amenites:
+    if amenity not in place.amenities:
         abort(404)
     if storage_t == 'db':
-        place.amenites.remove(amenity)
+        place.amenities.remove(amenity)
     else:
         place.amenity_ids.remove(amenity.id)
 
@@ -37,7 +37,7 @@ def delete_amenity_from_place(place_id, amenity_id):
     return {}
 
 
-@app_views.route('/places/<place_id>/amenites/<amenity_id>',
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  methods=['POST'])
 def link_amenity_place(place_id, amenity_id):
     """Add an amenity to a place"""
