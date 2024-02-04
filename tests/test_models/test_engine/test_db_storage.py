@@ -92,7 +92,7 @@ class TestFileStorage(unittest.TestCase):
         """Test getting one object by class name and instance id"""
         user = User()
         user_by_id = models.storage.get(User, user.id)
-        self.assertEqual(type(user_by_id), User)
+        self.assertTrue(isinstance(user_by_id, User))
         self.assertEqual(user_by_id, user)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
@@ -101,7 +101,9 @@ class TestFileStorage(unittest.TestCase):
         user1 = User()
         user2 = User()
         state1 = State()
-        models.storage.save()
+        user1.save()
+        user2.save()
+        state1.save()
 
         self.assertEqual(models.storage.count(), len(models.storage.all()))
         self.assertEqual(models.storage.count(User), 2)
