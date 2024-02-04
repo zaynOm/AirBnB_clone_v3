@@ -20,7 +20,7 @@ def places_of_place(place_id):
 
 @app_views.route('/places/<place_id>/amenites/<amenity_id>',
                  methods=['DELETE'])
-def delete_place(place_id, amenity_id):
+def delete_amenity_from_place(place_id, amenity_id):
     """delete a amenity linked to a place by its id"""
     place = storage.get(Place, place_id)
     amenity = storage.get(Amenity, amenity_id)
