@@ -91,6 +91,7 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """Test getting one object by class name and instance id"""
         state = State(**{'name': 'Casablanca-Settat'})
+        state.save()
         state_by_id = models.storage.get(State, state.id)
         self.assertTrue(isinstance(state_by_id, State))
         self.assertEqual(state_by_id, state)

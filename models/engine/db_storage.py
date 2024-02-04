@@ -79,7 +79,7 @@ class DBStorage:
         or None if not found
         """
         dict = self.all(cls)
-        for key, value in dict.items():
+        for _, value in dict.items():
             if (value.id == id):
                 return value
 
