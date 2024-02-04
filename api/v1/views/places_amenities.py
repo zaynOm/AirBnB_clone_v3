@@ -21,7 +21,7 @@ def amenites_of_place(place_id):
 @app_views.route('/places/<place_id>/amenites/<amenity_id>',
                  methods=['DELETE'])
 def delete_amenity_from_place(place_id, amenity_id):
-    """delete a amenity linked to a place by its id"""
+    """Remove an amenity from a place"""
     place = storage.get(Place, place_id)
     amenity = storage.get(Amenity, amenity_id)
     if not place or not amenity:
@@ -37,9 +37,10 @@ def delete_amenity_from_place(place_id, amenity_id):
     return {}
 
 
-@app_views.route('/places/<place_id>/amenites/<amenity_id>', methods=['POST'])
+@app_views.route('/places/<place_id>/amenites/<amenity_id>',
+                 methods=['POST'])
 def link_amenity_place(place_id, amenity_id):
-    """create a new amenity"""
+    """Add an amenity to a place"""
     place = storage.get(Place, place_id)
     amenity = storage.get(Amenity, amenity_id)
     if not place or not amenity:
@@ -47,5 +48,9 @@ def link_amenity_place(place_id, amenity_id):
     if amenity in place.amenities:
         return amenity.to_dict(), 200
 
-    place.amenities.append(amenity)
+    if storage_t == 'db':
+        place.amenities.append(amenity)
+    else:
+        place.amenity_ids.append(amenity.id)
+
     return amenity.to_dict(), 201
