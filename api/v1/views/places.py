@@ -105,4 +105,4 @@ def places_search():
                     places.remove(place)
                     break
 
-    return jsonify([place.to_dict() for place in places], len(places))
+    return jsonify([place.to_dict() for place in places])
