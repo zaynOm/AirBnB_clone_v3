@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 cors = CORS(app, resources={r'/*':  {'origins': '0.0.0.0'}})
 
-app.register_blueprint(app_views)
+app.register_blueprint(app_views, url_prefix='/api/v1')
 
 
 @app.teardown_appcontext
@@ -26,7 +26,9 @@ def not_found(e):
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
-if __name__ == '__main__':
-    API_HOST = os.getenv('HBNB_API_HOST') or '0.0.0.0'
-    API_PORT = os.getenv('HBNB_API_PORT') or 5000
+API_HOST = os.getenv('HBNB_API_HOST') or '0.0.0.0'
+API_PORT = os.getenv('HBNB_API_PORT') or 5000
+
+
+if __name__ == "__main__":
     app.run(host=API_HOST, port=API_PORT, threaded=True)
