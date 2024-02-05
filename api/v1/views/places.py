@@ -82,8 +82,8 @@ def places_search():
         abort(400, 'Not a JSON')
     data = request.get_json()
     places = set()
-    if not (data or data.get('states') and data.get('cities') and
-            data.get('amenities')):
+    if not data or (data.get('states') == [] or data.get('cities') == [] or
+                    data.get('amenities') == []):
         places = set(storage.all(Place).values())
 
     if data.get('states'):
@@ -105,4 +105,4 @@ def places_search():
                     places.remove(place)
                     break
 
-    return jsonify([place.to_dict() for place in places])
+    return jsonify([place.to_dict() for place in places], len(places))
