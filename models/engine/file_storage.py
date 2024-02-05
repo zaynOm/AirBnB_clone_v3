@@ -75,12 +75,16 @@ class FileStorage:
         or None if not found
         """
         if cls in classes.values() and id and type(id) is str:
-            d_obj = self.all(cls)
-            for key, value in d_obj.items():
-                if key.split(".")[1] == id:
+            dict = self.all(cls)
+            for key, value in dict.items():
+                if (value.id == id):
                     return value
+
         return None
 
     def count(self, cls=None):
         """counts the number of objects in storage"""
+        if not cls:
+            return len(self.all())
+
         return len(self.all(cls))

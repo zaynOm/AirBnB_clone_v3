@@ -4,7 +4,7 @@ Contains the class DBStorage
 """
 
 from models.amenity import Amenity
-from models.base_model import BaseModel, Base
+from models.base_model import Base
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -79,12 +79,16 @@ class DBStorage:
         or None if not found
         """
         if cls in classes.values() and id and type(id) is str:
-            d_obj = self.all(cls)
-            for key, value in d_obj.items():
-                if key.split(".")[1] == id:
+            dict = self.all(cls)
+            for _, value in dict.items():
+                if (value.id == id):
                     return value
+
         return None
 
     def count(self, cls=None):
         """counts the number of objects in storage"""
+        if not cls:
+            return len(self.all())
+
         return len(self.all(cls))
