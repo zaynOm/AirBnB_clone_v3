@@ -53,7 +53,7 @@ def create_review(place_id):
         abort(400, 'Missing user_id')
     if not storage.get(User, data.get('user_id')):
         abort(404)
-    new_review = Place(place_id=place_id, **data)
+    new_review = Review(place_id=place_id, **data)
     new_review.save()
     return new_review.to_dict(), 201
 
