@@ -21,11 +21,14 @@ def close_db(exception):
 
 
 @app.errorhandler(404)
-def not_found_error(error):
-    """Return a 404 error message"""
-    response = jsonify({"error": "Not found"})
-    response.status_code = 404
-    return response
+def page_not_found(e):
+    return {"error": "Not found"}, 404
+
+
+@app.errorhandler(400)
+def page_not_found(e):
+    message = e.description
+    return message, 400
 
 
 if __name__ == '__main__':
