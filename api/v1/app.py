@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """Entry point of the api"""
-from flask import Flask, jsonify, make_response
-from flask_cors import CORS
 import os
-
+from flask_cors import CORS
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 
