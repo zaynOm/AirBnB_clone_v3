@@ -82,37 +82,6 @@ def places_search():
         abort(400, 'Not a JSON')
     data = request.get_json()
     places = set()
-    if not data or all(not data.get(key) for key in ['states', 'cities', 'amenities']):
-        places = set(storage.all(Place).values())
-
-    if data.get('states'):
-        for state_id in data.get('states'):
-            state = storage.get(State, state_id)
-            for city in state.cities:
-                places.update(city.places)
-
-    if data.get('cities'):
-        for city_id in data.get('cities'):
-            city = storage.get(City, city_id)
-            places.update(city.places)
-
-    if data.get('amenities'):
-        for place in places:
-            for amenity_id in data.get('amenities'):
-                amenity = storage.get(Amenity, amenity_id)
-                if amenity not in place.amenities:
-                    places.remove(place)
-                    break
-
-    return jsonify([place.to_dict() for place in places])
-
-
-@app_views.route('/places_search', methods=['POST'])
-def places_search():
-    if not request.is_json:
-        abort(400, 'Not a JSON')
-    data = request.get_json()
-    places = set()
     if not data or all(
         not data.get(key) for key in ['states', 'cities', 'amenities']):
         places = set(storage.all(Place).values())
