@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Entry point of the api"""
-from flask import Flask, abort
+from flask import Flask, abort, jsonify
 from flask_cors import CORS
 import os
 
@@ -17,7 +17,7 @@ app.register_blueprint(app_views)
 @app.errorhandler(404)
 def not_found(e):
     """404 error Handler"""
-    abort(404)
+    return jsonify({"error": "Not found"}), 404
 
 
 @app.teardown_appcontext
