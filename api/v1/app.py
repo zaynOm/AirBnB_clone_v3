@@ -17,7 +17,7 @@ app.register_blueprint(app_views)
 @app.errorhandler(404)
 def not_found(e):
     """404 error Handler"""
-    return {"error": "Not found"}, 404
+    abort(404)
 
 
 @app.teardown_appcontext
