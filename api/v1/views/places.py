@@ -80,29 +80,26 @@ def update_place(id):
 def places_search():
     if not request.is_json:
         abort(400, 'Not a JSON')
+
     data = request.get_json()
-    places = set()
-    if not data or (data.get('states') == [] or data.get('cities') == [] or
-                    data.get('amenities') == []):
-        places = set(storage.all(Place).values())
+    places = set(storage.all(Place).values())
 
     if data.get('states'):
-        for state_id in data.get('states'):
+        for state_id in data['states']:
             state = storage.get(State, state_id)
-            for city in state.cities:
-                places.update(city.places)
+            if state:
+                places.update(city.places for city in state.cities)
 
     if data.get('cities'):
-        for city_id in data.get('cities'):
+        for city_id in data['cities']:
             city = storage.get(City, city_id)
-            places.update(city.places)
+            if city:
+                places.update(city.places)
 
     if data.get('amenities'):
         for place in places:
-            for amenity_id in data.get('amenities'):
-                amenity = storage.get(Amenity, amenity_id)
-                if amenity not in place.amenities:
-                    places.remove(place)
-                    break
+            if all(storage.get(Amenity, amenity_id) in place.amenities 
+                   for amenity_id in data['amenities']):
+                places.add(place)
 
     return jsonify([place.to_dict() for place in places])
