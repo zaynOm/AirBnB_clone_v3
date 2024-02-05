@@ -98,7 +98,7 @@ def places_search():
 
     if data.get('amenities'):
         for place in places:
-            if all(storage.get(Amenity, amenity_id) in place.amenities 
+            if all(storage.get(Amenity, amenity_id) in place.amenities
                    for amenity_id in data['amenities']):
                 places.add(place)
 
