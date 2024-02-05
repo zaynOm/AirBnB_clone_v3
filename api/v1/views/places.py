@@ -82,8 +82,8 @@ def places_search():
         abort(400, 'Not a JSON')
     data = request.get_json()
     places = set()
-    if not (data or data.get('states') and data.get('cities')
-            and data.get('amenities')):
+    if not (data or data.get('states') and data.get('cities') and
+            data.get('amenities')):
         places = set(storage.all(Place).values())
 
     if data.get('states'):
