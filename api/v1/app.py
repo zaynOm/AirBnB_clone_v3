@@ -14,16 +14,17 @@ cors = CORS(app, resources={r'/*':  {'origins': '0.0.0.0'}})
 app.register_blueprint(app_views)
 
 
+@app.teardown_appcontext
+def close_db(exception):
+    """Close connection"""
+    storage.close()
+
+
 @app.errorhandler(404)
 def not_found(e):
     """404 error Handler"""
     return make_response(jsonify({'error': 'Not found'}), 404)
 
-
-@app.teardown_appcontext
-def teardown(exception):
-    "Close connection"
-    storage.close()
 
 
 if __name__ == '__main__':
