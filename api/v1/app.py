@@ -22,12 +22,10 @@ def close_db(exception):
 @app.errorhandler(404)
 def not_found(e):
     """404 error Handler"""
-    return make_response(jsonify({"error": "Not found"}), 404)
-
-
-API_HOST = os.getenv('HBNB_API_HOST') or '0.0.0.0'
-API_PORT = os.getenv('HBNB_API_PORT') or 5000
+    return {"error": "Not found"}, 404
 
 
 if __name__ == "__main__":
+    API_HOST = os.getenv('HBNB_API_HOST') or '0.0.0.0'
+    API_PORT = os.getenv('HBNB_API_PORT') or 5000
     app.run(host=API_HOST, port=API_PORT, threaded=True)
