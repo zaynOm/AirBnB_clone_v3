@@ -4,7 +4,7 @@ Contains the class DBStorage
 """
 
 from models.amenity import Amenity
-from models.base_model import Base
+from models.base_model import BaseModel, Base
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -78,11 +78,11 @@ class DBStorage:
         Returns the object based on the class and its ID,
         or None if not found
         """
-        dict = self.all(cls)
-        for _, value in dict.items():
-            if (value.id == id):
-                return value
-
+        if isinstance(id, str) and issubclass(cls, BaseModel):
+            objects = self.all(cls)
+            for obj in objects.values():
+                if obj.id == id:
+                    return obj
         return None
 
     def count(self, cls=None):

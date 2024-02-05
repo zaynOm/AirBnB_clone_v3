@@ -74,11 +74,11 @@ class FileStorage:
         Returns the object based on the class and its ID,
         or None if not found
         """
-        dict = self.all(cls)
-        for key, value in dict.items():
-            if (value.id == id):
-                return value
-
+        if isinstance(id, str) and issubclass(cls, BaseModel):
+            objects = self.all(cls)
+            for obj in objects.values():
+                if obj.id == id:
+                    return obj
         return None
 
     def count(self, cls=None):
