@@ -29,7 +29,7 @@ class User(BaseModel, Base):
         """initializes user"""
         super().__init__(*args, **kwargs)
         if 'password' in kwargs:
-            self.password = kwargs['password']
+            self._password = kwargs['password']
 
     @property
     def password(self):
