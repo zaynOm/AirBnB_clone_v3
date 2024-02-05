@@ -74,16 +74,13 @@ class FileStorage:
         Returns the object based on the class and its ID,
         or None if not found
         """
-        if isinstance(id, str) and issubclass(cls, BaseModel):
-            objects = self.all(cls)
-            for obj in objects.values():
-                if obj.id == id:
-                    return obj
+        if cls in classes.values() and id and type(id) is str:
+            d_obj = self.all(cls)
+            for key, value in d_obj.items():
+                if key.split(".")[1] == id:
+                    return value
         return None
 
     def count(self, cls=None):
         """counts the number of objects in storage"""
-        if not cls:
-            return len(self.all())
-
         return len(self.all(cls))
