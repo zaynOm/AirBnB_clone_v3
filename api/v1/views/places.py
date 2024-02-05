@@ -89,13 +89,15 @@ def places_search():
     if data.get('states'):
         for state_id in data.get('states'):
             state = storage.get(State, state_id)
-            for city in state.cities:
-                places.update(city.places)
+            if state:
+                for city in state.cities:
+                    places.update(city.places)
 
     if data.get('cities'):
         for city_id in data.get('cities'):
             city = storage.get(City, city_id)
-            places.update(city.places)
+            if city:
+                places.update(city.places)
 
     if data.get('amenities'):
         for place in places:
