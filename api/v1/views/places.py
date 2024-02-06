@@ -104,9 +104,9 @@ def places_search():
         for place in places:
             for amenity_id in data.get('amenities'):
                 amenity = storage.get(Amenity, amenity_id)
-                if amenity not in place.amenities:
+                if amenity and amenity not in place.amenities:
                     places_to_remove.add(place)
                     break
-        places.difference_update(places_to_remove)
+        places = list(places.difference(places_to_remove))
 
     return jsonify([place.to_dict() for place in places])
