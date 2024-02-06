@@ -100,13 +100,12 @@ def places_search():
                 places.update(city.places)
 
     if data.get('amenities'):
-        places_to_remove = set()
+        filtered_places = set()
         for place in places:
-            for amenity_id in data.get('amenities'):
-                amenity = storage.get(Amenity, amenity_id)
-                if amenity and amenity not in place.amenities:
-                    places_to_remove.add(place)
-                    break
-        places = list(places.difference(places_to_remove))
+            place_amenities = {amenity.id for amenity in place.amenities}
+            if set(data.get('amenities')).issubset(place_amenities):
+                filtered_places.add(place)
 
-    return jsonify([place.to_dict() for place in places])
+        places = filtered_places
+
+    return jsonify([place.to_dict() for place in list(places)])
