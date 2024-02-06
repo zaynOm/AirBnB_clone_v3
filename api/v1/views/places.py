@@ -100,12 +100,12 @@ def places_search():
                 places.update(city.places)
 
     if data.get('amenities'):
-        filtered_places = set()
+        filtered_places = []
         for place in places:
             place_amenities = {amenity.id for amenity in place.amenities}
             if set(data.get('amenities')).issubset(place_amenities):
-                filtered_places.add(place)
+                filtered_places.append(place)
 
         places = filtered_places
 
-    return jsonify([place.to_dict() for place in list(places)])
+    return jsonify([place.to_dict() for place in places])
