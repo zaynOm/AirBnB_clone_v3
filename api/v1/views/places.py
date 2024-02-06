@@ -90,14 +90,14 @@ def places_search():
         places = set(storage.all(Place).values())
 
     if states:
-        for state_id in data.get('states'):
+        for state_id in states:
             state = storage.get(State, state_id)
             if state:
                 for city in state.cities:
                     places.update(city.places)
 
     if cities:
-        for city_id in data.get('cities'):
+        for city_id in cities:
             city = storage.get(City, city_id)
             if city:
                 places.update(city.places)
@@ -106,7 +106,7 @@ def places_search():
         filtered_places = []
         for place in places:
             place_amenities = {amenity.id for amenity in place.amenities}
-            if set(data.get('amenities')).issubset(place_amenities):
+            if set(amenities).issubset(place_amenities):
                 filtered_places.append(place)
 
         places = filtered_places
