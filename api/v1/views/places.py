@@ -81,25 +81,28 @@ def places_search():
     if not request.is_json:
         abort(400, 'Not a JSON')
     data = request.get_json()
+    states = data.get('states', [])
+    cities = data.get('cities', [])
+    amenities = data.get('amenities', [])
+
     places = set()
-    if not data or all(not data.get(key)
-                       for key in ['states', 'cities', 'amenities']):
+    if not states and not cities and not amenities:
         places = set(storage.all(Place).values())
 
-    if data.get('states'):
+    if states:
         for state_id in data.get('states'):
             state = storage.get(State, state_id)
             if state:
                 for city in state.cities:
                     places.update(city.places)
 
-    if data.get('cities'):
+    if cities:
         for city_id in data.get('cities'):
             city = storage.get(City, city_id)
             if city:
                 places.update(city.places)
 
-    if data.get('amenities'):
+    if amenities:
         filtered_places = []
         for place in places:
             place_amenities = {amenity.id for amenity in place.amenities}
