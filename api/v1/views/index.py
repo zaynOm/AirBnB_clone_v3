@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """index view"""
-from flask import Flask, jsonify
+from flask import jsonify
 from api.v1.views import app_views
 from models.amenity import Amenity
 from models.city import City
