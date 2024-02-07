@@ -109,6 +109,9 @@ def places_search():
             if all(amen in amenities for amen in place_amenities):
                 filtered_places.append(place)
 
-        return jsonify([place.to_dict() for place in filtered_places])
+        places.clear()
+        for place in filtered_places:
+            delattr(place, 'amenities')
+            places.add(place)
 
     return jsonify([place.to_dict() for place in places])
