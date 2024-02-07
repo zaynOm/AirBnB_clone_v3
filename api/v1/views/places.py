@@ -86,7 +86,7 @@ def places_search():
     amenities = data.get('amenities', [])
 
     places = set()
-    if not states and not cities and not amenities:
+    if not states and not cities:
         places = set(storage.all(Place).values())
 
     if states:
