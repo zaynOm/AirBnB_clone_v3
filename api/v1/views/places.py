@@ -109,7 +109,6 @@ def places_search():
             if set(amenities).issubset(place_amenities):
                 filtered_places.add(place)
 
-        places.clear()
-        places.update(filtered_places)
+        return jsonify([place.to_dict() for place in filtered_places])
 
     return jsonify([place.to_dict() for place in places])
