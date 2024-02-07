@@ -105,7 +105,7 @@ def places_search():
     if amenities:
         filtered_places = []
         for place in places:
-            place_amenities = {amenity.id for amenity in place.amenities}
+            place_amenities = [amenity.id for amenity in place.amenities]
             if all(amen in amenities for amen in place_amenities):
                 filtered_places.append(place)
 
