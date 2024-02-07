@@ -103,11 +103,11 @@ def places_search():
                 places.update(city.places)
 
     if amenities:
-        filtered_places = []
+        filtered_places = places.copy()
         for place in places:
             place_amenities = {amenity.id for amenity in place.amenities}
-            if set(amenities).issubset(place_amenities):
-                filtered_places.append(place)
+            if not set(amenities).issubset(place_amenities):
+                filtered_places.remove(place)
 
         places = filtered_places
 
