@@ -103,11 +103,11 @@ def places_search():
                 places.update(city.places)
 
     if amenities:
-        filtered_places = set()
+        filtered_places = []
         for place in places:
             place_amenities = {amenity.id for amenity in place.amenities}
-            if set(amenities).issubset(place_amenities):
-                filtered_places.add(place)
+            if all(amen in amenities for amen in place_amenities):
+                filtered_places.append(place)
 
         return jsonify([place.to_dict() for place in filtered_places])
 
